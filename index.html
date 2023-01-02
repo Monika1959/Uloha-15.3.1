@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+ 
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyzátor</title>
+
+    <style>
+        div{
+            border: solid 1px black;
+            width: 250px;
+            height: 150px;
+        }
+ 
+        #vysledky{
+            border: solid 1px black;
+            width: 750px;
+            height: 50px;
+        }
+    </style>
+ 
+</head>
+ 
+<body>
+
+    <h2>Textový analyzátor</h2>
+    <textarea name="" id="text" cols="30" rows="10"></textarea><br>
+
+    <button onclick="vypis()">Analyzuj</button>
+    <button onclick="sifrovanie()">Zašifruj</button><br><br>
+
+    <label for="searchbox"></label>
+    <input type="text" id="searchbox">
+ 
+    <p id="outputHladania"></p>
+ 
+    <button type="button" onclick="hladajVtexte()">Hľadaj</button>
+ 
+ 
+    <h4>Výsledky analýzy:</h4>
+    <div id="vysledky" for="vypis"></div>
+
+    <h4>Šifrovaný text:</h4>
+    <div id="zasifrovanie" for="sifrovanie"></div>
+ 
+    <script>
+ 
+        let poleTextu = [];
+ 
+        if(poleTextu === null){
+            poleTextu = [];
+        }
+ 
+        let textarea = document.getElementById("text");
+ 
+    function vypis(){
+ 
+        //..........BEZ MEDZERY............................
+ 
+        let miestaBezMedzery = 0;
+ 
+        for(let i = 0; i < textarea.value.length; i++){
+ 
+            if(textarea.value[i] != " "){
+                miestaBezMedzery++;
+            }
+        }
+ 
+        console.log("Text s medzerami je dlhý takto: ", miestaBezMedzery);
+ 
+        //...........S MEDZEROU...........................
+ 
+        let miestaSMedzerou = 0;
+ 
+        for(let i = 0; i < textarea.value.length; i++){
+                miestaSMedzerou++;
+        }
+ 
+        console.log("Text bez medzier je dlhý takto: ", miestaSMedzerou);
+ 
+        //............CISLA V TEXTE........................
+ 
+        let cislaVtexte = 0;
+ 
+        for(let i = 0; i < textarea.value.length; i++){
+ 
+            switch (textarea.value[i]) {
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+ 
+                    cislaVtexte++;
+                    break;
+            }
+        }
+ 
+        console.log("Čísel v texte je: ", cislaVtexte);
+ 
+        //..............HTML.........................
+ 
+        poleTextu.push({bezMedzery: miestaBezMedzery, sMedzerou: miestaSMedzerou, cisla: cislaVtexte});
+ 
+        console.log(poleTextu)
+ 
+        vysledky.innerText = "Text bez medzery je dlhý takto:  " + miestaBezMedzery + ",  Text s medzerou je dlhý takto:  " + miestaSMedzerou + ",  Čísel v texte je:  " + cislaVtexte + " ";
+    }
+ 
+    function hladajVtexte(){
+ 
+        let hladane = document.getElementById("searchbox").value;
+        let outputHladania = document.getElementById("outputHladania");
+ 
+        let text = document.getElementById("text").value;
+ 
+        text = text.toLowerCase();
+        hladane = hladane.toLowerCase();
+ 
+        //console.log(text)
+        //console.log(hladane)
+ 
+        if(text.includes(hladane)){
+            outputHladania.innerText = "Nachádza sa v texte"
+        }else {
+            outputHladania.innerText = "Nenachadza sa v texte"
+        }
+    }
+ 
+    //.......prepisanie konkretneho znaku na cislo
+    function sifrovanie(){
+ 
+        let pomocny = document.getElementById("zasifrovanie");
+        
+        for(let i = 0; i < textarea.value.length; i++){
+ 
+            if(textarea.value[i] == "o"){
+                //console.log("o");
+                textarea.value = textarea.value.slice(0, i) + "0" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "O"){
+                //console.log("O");
+                textarea.value  = textarea.value.slice(0, i) + "0" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "i"){
+                //console.log("i");
+                textarea.value  = textarea.value.slice(0, i) + "1" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "I"){
+                //console.log("I");
+                textarea.value = textarea.value.slice(0, i) + "1" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "e"){
+                //console.log("e");
+                textarea.value = textarea.value.slice(0, i) + "3" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "E"){
+                //console.log("E");
+                textarea.value = textarea.value.slice(0, i) + "3" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "a"){
+                //console.log("a");
+                textarea.value = textarea.value.slice(0, i) + "4" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "A"){
+                //console.log("A");
+                textarea.value  = textarea.value.slice(0, i) + "4" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "s"){
+                //console.log("s");
+                textarea.value = textarea.value.slice(0, i) + "5" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "S"){
+                //console.log("S");
+                textarea.value = textarea.value.slice(0, i) + "5" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "b"){
+                //console.log("b");
+                textarea.value  = textarea.value.slice(0, i) + "8" + textarea.value.slice(i + 1);
+            }
+            if(textarea.value[i] == "B"){
+                //console.log("B");
+                textarea.value  = textarea.value.slice(0, i) + "8" + textarea.value.slice(i + 1);
+            }  
+
+        }
+
+            //pomocny = textarea.toString().replace("text", "zasifrovanie");
+            pomocny.innerText = textarea.value;
+
+            //let pomocny = document.getElementById("text").innerText;
+        }
+    </script>
+</body>
+ 
+</html>
